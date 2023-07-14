@@ -155,9 +155,9 @@ class PostUpdateView(UpdateView):
 
     def dispatch(self, request, *args, **kwargs):
         self.post_obj = get_object_or_404(
-                Post,
-                pk=kwargs['post_id']
-            )
+            Post,
+            pk=kwargs['post_id']
+        )
         if (self.request.user == self.post_obj.author
            and not request.user.is_anonymous):
             return super().dispatch(request, *args, **kwargs)
@@ -179,9 +179,9 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
 
     def dispatch(self, request, *args, **kwargs):
         self.post_obj = get_object_or_404(
-                Post,
-                pk=kwargs['post_id']
-            )
+            Post,
+            pk=kwargs['post_id']
+        )
         if (self.request.user == self.post_obj.author
            and not request.user.is_anonymous):
             return super().dispatch(request, *args, **kwargs)
@@ -224,9 +224,9 @@ class CommentUpdateView(LoginRequiredMixin, UpdateView):
 
     def dispatch(self, request, *args, **kwargs):
         self.comment_obj = get_object_or_404(
-                Comment,
-                pk=kwargs['comment_id']
-            )
+            Comment,
+            pk=kwargs['comment_id']
+        )
         if (self.request.user == self.comment_obj.author
            and not request.user.is_anonymous):
             return super().dispatch(request, *args, **kwargs)
@@ -247,9 +247,9 @@ class CommentDeleteView(LoginRequiredMixin, DeleteView):
 
     def dispatch(self, request, *args, **kwargs):
         self.comment_obj = get_object_or_404(
-                Comment,
-                pk=kwargs['comment_id']
-            )
+            Comment,
+            pk=kwargs['comment_id']
+        )
         if (self.request.user == self.comment_obj.author
            and not request.user.is_anonymous):
             return super().dispatch(request, *args, **kwargs)
