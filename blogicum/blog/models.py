@@ -1,7 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-
 NUMBER_OF_LETTERS_VISIBLE = 21
 
 User = get_user_model()
@@ -70,12 +69,13 @@ class Post(PublishedModel):
 
     title = models.CharField('Заголовок', max_length=256)
     text = models.TextField('Текст')
+    image = models.ImageField('Фото', upload_to='post_images', blank=True)
     pub_date = models.DateTimeField(
         'Дата и время публикации',
         help_text=(
             'Если установить дату и время в будущем '
             '— можно делать отложенные публикации.'
-        )
+        ),
     )
     author = models.ForeignKey(
         User,
@@ -104,3 +104,21 @@ class Post(PublishedModel):
 
     def __str__(self):
         return self.title[:NUMBER_OF_LETTERS_VISIBLE]
+
+
+class Comment(PublishedModel):
+    text = models.TextField('Текст комментария')
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
+        related_name='comments',
+    )
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ('created_at',)
+        verbose_name = 'Поздравление'
+        verbose_name_plural = 'Поздравления'
+
+    def __str__(self):
+        return self.text[:NUMBER_OF_LETTERS_VISIBLE]
