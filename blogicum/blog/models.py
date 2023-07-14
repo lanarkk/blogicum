@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.urls import reverse
 
 NUMBER_OF_LETTERS_VISIBLE = 21
 
@@ -102,6 +103,9 @@ class Post(PublishedModel):
         default_related_name = "posts"
         ordering = ('-pub_date',)
 
+    def get_absolute_url(self):
+        return reverse('blog:post_detail', kwargs={'post_id': self.pk})
+
     def __str__(self):
         return self.title[:NUMBER_OF_LETTERS_VISIBLE]
 
@@ -111,7 +115,6 @@ class Comment(PublishedModel):
     post = models.ForeignKey(
         Post,
         on_delete=models.CASCADE,
-        related_name='comments',
     )
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -119,6 +122,7 @@ class Comment(PublishedModel):
         ordering = ('created_at',)
         verbose_name = 'Поздравление'
         verbose_name_plural = 'Поздравления'
+        default_related_name = "comments"
 
     def __str__(self):
         return self.text[:NUMBER_OF_LETTERS_VISIBLE]

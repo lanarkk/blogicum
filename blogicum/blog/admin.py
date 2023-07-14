@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Category, Location, Post
+from .models import Category, Comment, Location, Post
 
 
 @admin.register(Post)
@@ -61,6 +61,27 @@ class CategoryAdmin(admin.ModelAdmin):
         'title',
         'description',
         'slug',
+    )
+    list_editable = (
+        'is_published',
+    )
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    """Модель Комментарии в админ зоне.
+    Описывает ее внешний вид и функционал."""
+
+    list_display = (
+        'text',
+        'post',
+        'author',
+        'is_published',
+    )
+    list_display_links = (
+        'text',
+        'post',
+        'author',
     )
     list_editable = (
         'is_published',
